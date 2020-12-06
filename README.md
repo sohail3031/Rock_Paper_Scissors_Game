@@ -12,6 +12,6 @@ The user has to select their option wisely. If the user wins, a point is given t
 3. Scissor beats the Paper.
 
 
-# Working
+# Let's Play
 
 To play the game, run rps.py file.
