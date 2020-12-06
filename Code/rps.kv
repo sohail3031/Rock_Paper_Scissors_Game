@@ -55,7 +55,7 @@
                             font_size: 30
                     BoxLayout:
                         orientation: "vertical"
-                        size_hint_y: .8
+                        size_hint_y: .7
                         canvas.before:
                             Rectangle:
                                 pos: self.pos
@@ -76,6 +76,19 @@
                             font_size: 20
                             background_color: (.06, .47, .47, 1)
                             on_release: app.stop()
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .1
+                        canvas.before:
+                            Color:
+                                rgba: (.06, .45, .45, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: "Created By Mohd Sohail Ahmed"
+                            bold: True
+                            font_size: 20
             # user name screen
             Screen:
                 id: second_screen
