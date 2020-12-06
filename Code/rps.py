@@ -12,7 +12,7 @@ class RockPaperScissor(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.spin_val = ["ROCK", "PAPER", "SCISSOR"]
-        self.user_won, self.match_tie, self.comp_won = 0, 0, 0
+        self.user_won, self.comp_won = 0, 0
         self.win_conditions = {"ROCK": "SCISSOR", "PAPER": "ROCK", "SCISSOR": "PAPER"}
 
     # change home screen -> user name screen function
@@ -49,27 +49,19 @@ class RockPaperScissor(BoxLayout):
         else:
             comp_result = self.computer_select()
             if user_selected == comp_result:
-                self.ids.game_status.text = "It's a tie!"
-                self.match_tie += 1
-                if self.user_won != 0:
-                    self.user_won -= 1
-                if self.comp_won != 0:
-                    self.comp_won -= 1
+                self.ids.match_tie.text = "It's a tie!"
+                self.user_won += 1
+                self.comp_won += 1
             elif self.win_conditions[user_selected] == comp_result:
-                self.ids.game_status.text = f"You Won!"
+                self.ids.match_tie.text = "You Won!"
                 self.user_won += 1
                 if self.comp_won != 0:
                     self.comp_won -= 1
-                if self.match_tie != 0:
-                    self.match_tie -= 1
             else:
-                self.ids.game_status.text = "Computer Has Won!"
+                self.ids.match_tie.text = "Computer Has Won!"
                 self.comp_won += 1
                 if self.user_won != 0:
                     self.user_won -= 1
-                if self.match_tie != 0:
-                    self.match_tie -= 1
-            self.ids.match_tie.text = f"Match Ties: {self.match_tie}"
             self.ids.user_won.text = f"Your Wins: {self.user_won}"
             self.ids.computer_won.text = f"Computer Wins: {self.comp_won}"
 
@@ -83,6 +75,7 @@ class RockPaperScissor(BoxLayout):
         elif comp_selected == "SCISSOR":
             self.ids.computer_image.source = "images/scissor.jpg"
         self.ids.computer_image_label.text = f'Computer Selected "{comp_selected}"'
+        self.ids.game_status.text = f"I will select {comp_selected}"
         return comp_selected
 
     # user select function
