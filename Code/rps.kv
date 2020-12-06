@@ -1,0 +1,259 @@
+<RotateImageLeft@Image>:
+    angle: 270
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+
+<RotateImageRight@Image>:
+    angle: 90
+    canvas.before:
+        PushMatrix
+        Rotate:
+            angle: root.angle
+            axis: 0, 0, 1
+            origin: root.center
+    canvas.after:
+        PopMatrix
+
+<RockPaperScissor>:
+    # main layout
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        ScreenManager:
+            id: screen_manager
+            # home screen
+            Screen:
+                id: first_screen
+                name: "first_screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 10
+                    spacing: 10
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .1
+                        canvas.before:
+                            Color:
+                                rgba: (.06, .45, .45, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            text: "Welcome to Rock, Paper & Scissors Game"
+                            bold: True
+                            font_size: 30
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .8
+                        canvas.before:
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                                source: "images/rock_paper_scissor.jpg"
+                    BoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: .1
+                        Button:
+                            text: "Let's Play"
+                            bold: True
+                            font_size: 20
+                            background_color: (.06, .47, .47, 1)
+                            on_release: root.change_screen()
+                        Button:
+                            text: "Quit"
+                            bold: True
+                            font_size: 20
+                            background_color: (.06, .47, .47, 1)
+                            on_release: app.stop()
+            # user name screen
+            Screen:
+                id: second_screen
+                name: "second_screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 10
+                    spacing: 10
+                    canvas.before:
+                        Color:
+                            rgba: (1, 1, 1, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        canvas.before:
+                            Color:
+                                rgba: (.06, .45, .45, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: .4
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: .2
+                            spacing: 10
+                            TextInput:
+                                multiline: False
+                                hint_text: "Enter Username"
+                                size_hint: (None, None)
+                                width: 300
+                                height: 40
+                                id: user_name_field
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                bold: True
+                                font_size: 20
+                                on_text_validate: root.validate_user_name()
+                            Button:
+                                text: "Let's Play"
+                                size_hint: (None, None)
+                                width: 300
+                                height: 40
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                background_color: (.06, .47, .47, 1)
+                                bold: True
+                                font_size: 20
+                                on_release: root.validate_user_name()
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: .4
+            # game screen
+            Screen:
+                id: third_screen
+                name: "third_screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 10
+                    spacing: 10
+                    canvas.before:
+                        Color:
+                            rgba: (1, 1, 1, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .1
+                        canvas.before:
+                            Color:
+                                rgba: (.06, .45, .45, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        Label:
+                            id: display_user_name
+                            text: "Welcome User"
+                            bold: True
+                            font_size: 30
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: .8
+                        spacing: 10
+                        canvas.before:
+                            Color:
+                                rgba: (.06, .45, .45, 1)
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                        BoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: .1
+                            Label:
+                                id: user_won
+                                bold: True
+                                font_size: 20
+                                text: "Your Wins: 0"
+                            Label:
+                                id: match_tie
+                                bold: True
+                                font_size: 20
+                                text: "Match Ties: 0"
+                            Label:
+                                id: computer_won
+                                bold: True
+                                font_size: 20
+                                text: "Computer Wins: 0"
+                        BoxLayout:
+                            orientation: "horizontal"
+                            spacing: 10
+                            size_hint_y: .9
+                            BoxLayout:
+                                orientation: "vertical"
+                                spacing: 10
+                                padding: 10
+                                BoxLayout:
+                                    orientation: "vertical"
+                                    size_hint_y: .8
+                                    FloatLayout:
+                                        RotateImageLeft:
+                                            id: user_image
+                                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                            size_hint_x: .8
+                                            size_hint_y: .8
+                                            source: "images/bg.jpg"
+                                            allow_stretch: True
+                                Spinner:
+                                    id: user_spinner
+                                    size_hint_y: .1
+                                    text: "SELECT"
+                                    bold: True
+                                    font_size: 20
+                                    background_color: (.06, .47, .47, 1)
+                                Label:
+                                    id: user_image_label
+                                    size_hint_y: .1
+                                    bold: True
+                                    font_size: 20
+                            BoxLayout:
+                                orientation: "vertical"
+                                spacing: 10
+                                padding: 10
+                                BoxLayout:
+                                    orientation: "vertical"
+                                    size_hint_y: .8
+                                    FloatLayout:
+                                        RotateImageRight:
+                                            id: computer_image
+                                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                            size_hint_x: .8
+                                            size_hint_y: .8
+                                            source: "images/bg.jpg"
+                                            allow_stretch: True
+                                Label:
+                                    id: game_status
+                                    size_hint_y: .1
+                                    text: ""
+                                    bold: True
+                                    font_size: 20
+                                Label:
+                                    id: computer_image_label
+                                    size_hint_y: .1
+                                    bold: True
+                                    font_size: 20
+                    BoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: .1
+                        Button:
+                            text: "Play"
+                            bold: True
+                            font_size: 20
+                            background_color: (.06, .47, .47, 1)
+                            on_release: root.play_game()
+                        Button:
+                            text: "Quit"
+                            bold: True
+                            font_size: 20
+                            background_color: (.06, .47, .47, 1)
+                            on_release: app.stop()
